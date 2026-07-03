@@ -76,11 +76,11 @@ public class ArbolIndigo {
         Nodo izquierdo = (Nodo) ArbolNodo.pop();
         Nodo derecho = (Nodo) ArbolNodo.pop();
         
-        String operador = caracter.peek();
+        String operador = caracter.pop();
         //Investigar qué hace peek
             /* Sirve para ver el elemento que se encuentra en la cima 
                de la pila sin extraerlo ni eliminarlo */
-        ArbolNodo.push(new Nodo(caracter.pop(),izquierdo,derecho));
+        ArbolNodo.push(new Nodo(operador,izquierdo,derecho));
         //
         // El operador es +
         if (operador.equals("+")) reglasEjecutadas.add("p"+paso+" E.nodo = new Nodo(+,E1.nodo,T.nodo)");
@@ -122,8 +122,7 @@ public class ArbolIndigo {
                 //6. Extraer de la pila los términos que estaban
                 ArbolNodo.push(new Nodo(token));
                 paso++;
-                String regla = "T.nodo = new Hoja(id<"+token+">,id.entrada_"+token+")";
-                reglasEjecutadas.add("p"+paso+" "+regla);
+                reglasEjecutadas.add("p"+paso+" T.nodo = new Hoja(id<"+token+">,id.entrada_"+token+")");
             }else if (token.equals(")")){
                 //7. Tratar tokens que no son paréntesis
                 while(!caracter.empty()&& !caracter.peek().equals("(")) guardar(); // while
