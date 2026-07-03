@@ -141,7 +141,7 @@ public class Arbol {
             }else{
                 if (!token.equals("(")&&!caracter.empty()) {
                     String exa = (String) caracter.peek();
-                    while (!exa.equals("(")&&caracter.empty()&&aritmeticos.indexOf(exa)>=aritmeticos.indexOf(token)) { 
+                    while (!exa.equals("(")&&!caracter.empty()&&aritmeticos.indexOf(exa)>=aritmeticos.indexOf(token)) { 
                             guardar();
                             if (!caracter.empty()) { exa = (String) caracter.peek(); } // If !caracter.empty
                     }// while !exa

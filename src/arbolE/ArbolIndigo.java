@@ -82,25 +82,18 @@ public class ArbolIndigo {
                de la pila sin extraerlo ni eliminarlo */
         ArbolNodo.push(new Nodo(caracter.pop(),izquierdo,derecho));
         //
-        if (operador.equals("+")) {
-            String reglaE = "E.nodo = new Nodo(+,E1.nodo,T.nodo)";
-            reglasEjecutadas.add("p"+paso+" "+reglaE);
-        }// El operador es +
+        // El operador es +
+        if (operador.equals("+")) reglasEjecutadas.add("p"+paso+" E.nodo = new Nodo(+,E1.nodo,T.nodo)");
         
-        if (operador.equals("*")) {
-            String reglaE = "E.nodo = new Nodo(*,E1.nodo,T.nodo)";
-            reglasEjecutadas.add("p"+paso+" "+reglaE);
-        }// El operador es *
+        // El operador es *
+        if (operador.equals("*")) reglasEjecutadas.add("p"+paso+" E.nodo = new Nodo(*,E1.nodo,T.nodo)");
         
-        if (operador.equals("-")) {
-            String reglaE = "E.nodo = new Nodo(-,E1.nodo,T.nodo)";
-            reglasEjecutadas.add("p"+paso+" "+reglaE);
-        }// El operador es -
+        // El operador es -
+        if (operador.equals("-")) reglasEjecutadas.add("p"+paso+" E.nodo = new Nodo(-,E1.nodo,T.nodo)");
         
-        if (operador.equals("/")) {
-            String reglaE = "E.nodo = new Nodo(/,E1.nodo,T.nodo)";
-            reglasEjecutadas.add("p"+paso+" "+reglaE);
-        }// El operador es /
+        // El operador es /
+        if (operador.equals("/")) reglasEjecutadas.add("p"+paso+" E.nodo = new Nodo(/,E1.nodo,T.nodo)");
+        
     }// guardar
     
     // Métodos del árbol
@@ -121,38 +114,35 @@ public class ArbolIndigo {
             //4. Omitir espacios en blanco
             token = tokenizer.nextToken();
             System.out.println("Token "+token);
-            if (espacios.contains(token)) {
+            if (espacios.contains(token))
                 //5. Se trata de un identificador
                 System.out.println("Omitiendo espacios");//"Se trata de un identificador");
                 //
-            }else if (!aritmeticos.contains(token)) { // No es un operador aritmético
+            else if (!aritmeticos.contains(token)) { // No es un operador aritmético
                 //6. Extraer de la pila los términos que estaban
-                        ArbolNodo.push(new Nodo(token));
-                        paso++;
-                        String regla = "T.nodo = new Hoja(id<"+token+">,id.entrada_"+token+")";
-                        reglasEjecutadas.add("p"+paso+" "+regla);
-                    }else if (token.equals(")")){
-                    //7. Tratar tokens que no son paréntesis
-                        while(!caracter.empty()&& !caracter.peek().equals("(")){
-                            guardar();
-                        }// while
-                        caracter.pop();
+                ArbolNodo.push(new Nodo(token));
+                paso++;
+                String regla = "T.nodo = new Hoja(id<"+token+">,id.entrada_"+token+")";
+                reglasEjecutadas.add("p"+paso+" "+regla);
+            }else if (token.equals(")")){
+                //7. Tratar tokens que no son paréntesis
+                while(!caracter.empty()&& !caracter.peek().equals("(")) guardar(); // while
+                caracter.pop();
             //8. Guardar el token
             }else{
                 if (!token.equals("(")&&!caracter.empty()) {
                     String exa = (String) caracter.peek();
-                    while (!exa.equals("(")&&caracter.empty()&&aritmeticos.indexOf(exa)>=aritmeticos.indexOf(token)) { 
+                    while (!exa.equals("(")&&!caracter.empty()&&aritmeticos.indexOf(exa)>=aritmeticos.indexOf(token)) { 
                             guardar();
-                            if (!caracter.empty()) { exa = (String) caracter.peek(); } // If !caracter.empty
+                            if (!caracter.empty()) exa = (String) caracter.peek(); // If !caracter.empty
                     }// while !exa
                 }// if-token
                 caracter.push(token); // guardar el token
-            } // if else
+            } // else
         }// while - tokenizer - hasMoreTokens
         while (!caracter.empty()){
-            if (caracter.peek().equals("(")) { // El caracter tiene símbolo de apertura
-                caracter.pop();
-            }else{
+            if (caracter.peek().equals("(")) caracter.pop(); // El caracter tiene símbolo de apertura
+            else{
                 guardar(); // Aquí se insertan los operadores
                 raiz = (Nodo) ArbolNodo.peek();
             }// if
