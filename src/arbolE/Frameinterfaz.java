@@ -4,6 +4,8 @@
  */
 package arbolE;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author aneao
@@ -17,6 +19,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
      */
     public Frameinterfaz() {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -360,6 +363,15 @@ public class Frameinterfaz extends javax.swing.JFrame {
         datos = jTextField1.getText();
         Nodo arbolExpresion = arbol.crear(datos); //Enviar los datos al árbol = expresión
         jTextArea4.append(arbol.getReglasEjecutadas());
+        
+        JFrame ventana = new JFrame("Visualizador de Árboles - LyA2");
+        PanelArbol panel = new PanelArbol(arbolExpresion);
+        
+        ventana.add(panel);
+        ventana.setSize(600,400);
+        ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ventana.setLocationRelativeTo(null);
+        ventana.setVisible(true);
     }//GEN-LAST:event_BtnAgenteActionPerformed
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
