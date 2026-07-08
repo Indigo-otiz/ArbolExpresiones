@@ -177,11 +177,12 @@ public class Frameinterfaz extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnAgente))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnAgente)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
@@ -357,15 +358,20 @@ public class Frameinterfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void BtnAgenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgenteActionPerformed
-        // TODO add your handling code here:
+        jTextArea4.setText("");
+        
         String datos="";
         ArbolAgenteIA arbol = new ArbolAgenteIA();
         datos = jTextField1.getText();
         Nodo arbolExpresion = arbol.crear(datos); //Enviar los datos al árbol = expresión
         jTextArea4.append(arbol.getReglasEjecutadas());
         
+        PersonalizarPanelArbol p = new PersonalizarPanelArbol();
+        p.setModal(true);
+        p.setVisible(true);
+        
         JFrame ventana = new JFrame("Visualizador de Árboles - LyA2");
-        PanelArbol panel = new PanelArbol(arbolExpresion);
+        PanelArbol panel = new PanelArbol(arbolExpresion, p);
         
         ventana.add(panel);
         ventana.setSize(600,400);
@@ -376,7 +382,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
         // TODO add your handling code here:
-        jTextArea4.removeAll(); 
+        jTextArea4.setText(""); 
     }//GEN-LAST:event_btnCleanActionPerformed
 
     /**

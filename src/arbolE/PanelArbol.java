@@ -4,6 +4,7 @@
  */
 package arbolE;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -24,16 +25,33 @@ import javax.swing.JPanel;
  *    que cierre el proyecto.
  * 
  * NOMBRE:  Índigo Andre Ortiz Vega
- * FECHA:
+ * FECHA: 08/07/2026
  * ==============================================
  */
 public class PanelArbol extends JPanel {
     private final Nodo raiz;
     private final int RADIO = 20;
     private final int ESPACIO_VERTICAL = 60;
-
+    private PersonalizarPanelArbol p = new PersonalizarPanelArbol();
+    private int anchoNodo;
+    private int anchoLinea;
+    private Color colorNodo;
+    private Color colorLinea;
+    
     public PanelArbol(Nodo raiz) {
         this.raiz = raiz;
+        setBackground(Color.WHITE);
+    }
+    
+    public PanelArbol(Nodo raiz, PersonalizarPanelArbol p) {
+        this.p = p;
+        this.raiz = raiz;
+        
+        this.anchoNodo = p.getAnchoNodo();
+        this.anchoLinea = p.getAnchoLinea();
+        this.colorNodo = p.getColorNodo();
+        this.colorLinea = p.getColorLinea();
+    
         setBackground(Color.WHITE);
     }
 
@@ -53,25 +71,29 @@ public class PanelArbol extends JPanel {
 
     private void dibujarNodo(Graphics2D g, Nodo nodo, int x, int y, int espacioHorizontal) {
         if (nodo == null) return;
-
+        
         // Dibujar NODOS IZQUIERDO Y DERECHO 
-        g.setColor(Color.BLACK);
+        g.setStroke(new BasicStroke(anchoLinea));
+        
         if (nodo.getIzquierdo() != null) {
+            g.setColor(colorLinea);
             g.drawLine(x, y, x - espacioHorizontal, y + ESPACIO_VERTICAL);
             dibujarNodo(g, nodo.getIzquierdo(), x - espacioHorizontal,
                     y + ESPACIO_VERTICAL, espacioHorizontal / 2);
         }
         if (nodo.getDerecho() != null) {
+            g.setColor(colorLinea);
             g.drawLine(x, y, x + espacioHorizontal, y + ESPACIO_VERTICAL);
             dibujarNodo(g, nodo.getDerecho(), x 
                     + espacioHorizontal, y + ESPACIO_VERTICAL, espacioHorizontal / 2);
         }
 
         // FORMATO DEL NODO
-        g.setColor(new Color(173, 216, 230)); 
-        g.fillOval(x - RADIO, y - RADIO, 2 * RADIO, 2 * RADIO);
-        g.setColor(Color.BLUE);
-        g.drawOval(x - RADIO, y - RADIO, 2 * RADIO, 2 * RADIO);
+        g.setColor(colorNodo); 
+        g.fillOval(x - anchoNodo/2, y - anchoNodo/2, anchoNodo, anchoNodo);
+        g.setStroke(new BasicStroke(anchoLinea));
+        g.setColor(colorNodo.darker());
+        g.drawOval(x - anchoNodo/2, y - anchoNodo/2, anchoNodo, anchoNodo);
 
         //TEXTO CENTRADO DEL NODO
         g.setColor(Color.BLACK);
