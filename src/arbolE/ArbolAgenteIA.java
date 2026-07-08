@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 import java.util.StringTokenizer;
+import static javax.swing.JOptionPane.*;
 
 /**
  *
@@ -65,6 +66,10 @@ public class ArbolAgenteIA {
             System.out.println("Reglas ejecutadas "+reglasEjecutadas.get(i));
             reglasE+=reglasEjecutadas.get(i)+"\n";
         }//for
+        
+        System.out.println("Tabla de Simbolos");
+        System.out.println("Token/id  |  Valor");
+        tablaSimbolos.forEach((clave,valor) -> { System.out.println("   "+clave + "      |   " + valor);});
         return reglasE;
     }// reglasEjecutadas
     
@@ -121,7 +126,9 @@ public class ArbolAgenteIA {
                 ArbolNodo.push(new Nodo(token));
                 paso++;
                 reglasEjecutadas.add("p"+paso+" T.nodo = new Hoja(id<"+token+">,id.entrada_"+token+")");
-                //insertaSinbolos(token);
+                
+                insertaSimbolos(token);
+                
             }else if (token.equals("(")) caracter.push(token);
                 //7. Tratar tokens que no son paréntesis
                 
@@ -158,5 +165,16 @@ public class ArbolAgenteIA {
                 return -1; // para paréntesis u otros caracteres
         }// switch
     }// obtenerPrioridad
+    
+    public void insertaSimbolos(String token){
+        
+        // Solicitar el valor del token
+        // e insertar en tablaSimbolos
+        // 01. Solicitar el valor para el token
+        // 02. Insertar en Tabla símbolo
+        // 03. Mostrar en consola al finalizar en getReglasEjecutadas
+        String valor = showInputDialog("¿Cuál es el valor de "+token+"?");
+        tablaSimbolos.put(token, valor);
+    }// 
     
 }// Clase Arbol
