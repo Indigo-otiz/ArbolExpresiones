@@ -13,7 +13,8 @@ import javax.swing.JFrame;
 public class Frameinterfaz extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Frameinterfaz.class.getName());
-
+    String nPolaca;
+    
     /**
      * Creates new form Frameinterfaz
      */
@@ -21,7 +22,25 @@ public class Frameinterfaz extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
-
+    
+    // Métodos inOrden, postOrden y preOrden 9-Julio
+    public void inOrden(Nodo n){
+        
+    }// inOrden
+    
+    public void preOrden(Nodo n){
+        if(n!=null){
+            jTxtPreOrden.append(n.getDato()+"\n");
+            nPolaca+=jNotacionPolaca.getText()+n.getDato()+" ";
+            jNotacionPolaca.setText(jNotacionPolaca.getText()+n.getDato()+" ");
+            preOrden(n.getIzquierdo());
+            preOrden(n.getDerecho());
+        } // if
+    }// preOrden
+    
+    public void postOrden(Nodo n){
+        
+    }// postOrden
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,11 +60,11 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTxtPreOrden = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jTxtPostOrden = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        jTxtInOrden = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea4 = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -54,7 +73,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jNotacionPolaca = new javax.swing.JTextField();
         btnClean = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -122,17 +141,17 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel1.setText("Expresión");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTxtPreOrden.setColumns(20);
+        jTxtPreOrden.setRows(5);
+        jScrollPane1.setViewportView(jTxtPreOrden);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        jTxtPostOrden.setColumns(20);
+        jTxtPostOrden.setRows(5);
+        jScrollPane2.setViewportView(jTxtPostOrden);
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        jTxtInOrden.setColumns(20);
+        jTxtInOrden.setRows(5);
+        jScrollPane3.setViewportView(jTxtInOrden);
 
         jTextArea4.setColumns(20);
         jTextArea4.setRows(5);
@@ -198,8 +217,8 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Notación Polaca");
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+        jNotacionPolaca.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jNotacionPolaca.addActionListener(this::jNotacionPolacaActionPerformed);
 
         btnClean.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btnClean.setText("Clean");
@@ -220,7 +239,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jNotacionPolaca, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
@@ -234,7 +253,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jNotacionPolaca, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClean)
                     .addComponent(jButton5)
@@ -353,9 +372,9 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jTextArea4.append(a.getReglasEjecutadas());
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jNotacionPolacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNotacionPolacaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jNotacionPolacaActionPerformed
 
     private void BtnAgenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgenteActionPerformed
         jTextArea4.setText("");
@@ -365,6 +384,8 @@ public class Frameinterfaz extends javax.swing.JFrame {
         datos = jTextField1.getText();
         Nodo arbolExpresion = arbol.crear(datos); //Enviar los datos al árbol = expresión
         jTextArea4.append(arbol.getReglasEjecutadas());
+        
+        preOrden(arbolExpresion);
         
         PersonalizarPanelArbol p = new PersonalizarPanelArbol();
         p.setModal(true);
@@ -427,6 +448,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField jNotacionPolaca;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -437,12 +459,11 @@ public class Frameinterfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextArea jTxtInOrden;
+    private javax.swing.JTextArea jTxtPostOrden;
+    private javax.swing.JTextArea jTxtPreOrden;
     // End of variables declaration//GEN-END:variables
 }

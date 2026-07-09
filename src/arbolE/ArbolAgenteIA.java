@@ -30,6 +30,7 @@ public class ArbolAgenteIA {
     final String aritmeticos = "+-*/()^=";
     final String variables = "abcdefghijklmnopqrstuvwxyz";
     final String opMultiplica = "*";
+    final String numeros = "1234567890";
     
     private Nodo raiz;
     //30 junio 2026
@@ -86,8 +87,8 @@ public class ArbolAgenteIA {
         
         paso++;
         r = "r" + paso;
-        Nodo izquierdo = (Nodo) ArbolNodo.pop();
         Nodo derecho = (Nodo) ArbolNodo.pop();
+        Nodo izquierdo = (Nodo) ArbolNodo.pop();
         
         String operador = caracter.pop();
         //Investigar qué hace peek
@@ -101,6 +102,7 @@ public class ArbolAgenteIA {
     
     // Métodos del árbol
     public Nodo crear(String expresion){
+        int resp = showConfirmDialog(null, "¿Desea asignar valor a los tokes?", "Inserta Simbolos", YES_NO_OPTION);
         //1. Considerar la expresió como un conjunto de tokens
         StringTokenizer tokenizer;
         String token;
@@ -127,7 +129,7 @@ public class ArbolAgenteIA {
                 paso++;
                 reglasEjecutadas.add("p"+paso+" T.nodo = new Hoja(id<"+token+">,id.entrada_"+token+")");
                 
-                insertaSimbolos(token);
+                insertaSimbolos(token,resp);
                 
             }else if (token.equals("(")) caracter.push(token);
                 //7. Tratar tokens que no son paréntesis
@@ -166,15 +168,19 @@ public class ArbolAgenteIA {
         }// switch
     }// obtenerPrioridad
     
-    public void insertaSimbolos(String token){
-        
+    public void insertaSimbolos(String token, int resp){
         // Solicitar el valor del token
         // e insertar en tablaSimbolos
         // 01. Solicitar el valor para el token
         // 02. Insertar en Tabla símbolo
         // 03. Mostrar en consola al finalizar en getReglasEjecutadas
-        String valor = showInputDialog("¿Cuál es el valor de "+token+"?");
-        tablaSimbolos.put(token, valor);
+        if (resp==0 && !numeros.contains(token)) {
+            String valor = showInputDialog("¿Cuál es el valor de "+token+"?");
+            tablaSimbolos.put(token, valor);
+        }else{
+            tablaSimbolos.put(token, token);
+        }
+        
     }// 
     
 }// Clase Arbol
