@@ -66,6 +66,8 @@ public class PanelArbol extends JPanel {
             
             // INICIA DESDE EL CENTRO SUPERIOR
             dibujarNodo(g2, raiz, getWidth() / 2, 40, getWidth() / 4);
+            Nodo nodoValor = new Nodo(String.valueOf(raiz.getValor()));
+            dibujarNodo(g2, nodoValor, getWidth() / 2+anchoNodo, 40, getWidth() / 4);
         }
     }
 
@@ -80,20 +82,28 @@ public class PanelArbol extends JPanel {
             g.drawLine(x, y, x - espacioHorizontal, y + ESPACIO_VERTICAL);
             dibujarNodo(g, nodo.getIzquierdo(), x - espacioHorizontal,
                     y + ESPACIO_VERTICAL, espacioHorizontal / 2);
+            
+            Nodo nodoValor = new Nodo(String.valueOf(nodo.getIzquierdo().getValor()));
+            dibujarNodo(g, nodoValor, x - espacioHorizontal+anchoNodo,
+                    y + ESPACIO_VERTICAL, espacioHorizontal / 2);
         }
         if (nodo.getDerecho() != null) {
             g.setColor(colorLinea);
             g.drawLine(x, y, x + espacioHorizontal, y + ESPACIO_VERTICAL);
             dibujarNodo(g, nodo.getDerecho(), x 
                     + espacioHorizontal, y + ESPACIO_VERTICAL, espacioHorizontal / 2);
+            
+            Nodo nodoValor = new Nodo(String.valueOf(nodo.getDerecho().getValor()));
+            dibujarNodo(g,nodoValor , x 
+                    + espacioHorizontal+anchoNodo, y + ESPACIO_VERTICAL, espacioHorizontal / 2);
         }
 
         // FORMATO DEL NODO
         g.setColor(colorNodo); 
-        g.fillOval(x - anchoNodo/2, y - anchoNodo/2, anchoNodo, anchoNodo);
+        g.fillRect(x - anchoNodo/2, y - anchoNodo/2, anchoNodo, anchoNodo);
         g.setStroke(new BasicStroke(anchoLinea));
         g.setColor(colorNodo.darker());
-        g.drawOval(x - anchoNodo/2, y - anchoNodo/2, anchoNodo, anchoNodo);
+        g.drawRect(x - anchoNodo/2, y - anchoNodo/2, anchoNodo, anchoNodo);
 
         //TEXTO CENTRADO DEL NODO
         g.setColor(Color.BLACK);

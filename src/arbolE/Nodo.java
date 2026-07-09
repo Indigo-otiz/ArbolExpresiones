@@ -20,6 +20,7 @@ public class Nodo {
         private Nodo padre;
         private Nodo izquierdo;
         private Nodo derecho;
+        private int valor;
         
         
         private String codigoIntermedio; //
@@ -28,7 +29,12 @@ public class Nodo {
     public Nodo(String dato){ //Información
         this.dato = dato;
     }// Constructor
-
+    
+    public Nodo(String dato, int valor){ //Información
+        this.dato = dato;
+        this.valor = valor;
+    }// Constructor
+    
     public Nodo(String dato, Nodo izquierdo, Nodo derecho) {
         this.dato = dato;
         this.izquierdo = izquierdo;
@@ -36,6 +42,16 @@ public class Nodo {
         this.padre = null;
         this.codigoIntermedio = "";
         this.lugar = "";
+    }// Constructor
+    
+    public Nodo(String dato, Nodo izquierdo, Nodo derecho, int valor) {
+        this.dato = dato;
+        this.izquierdo = izquierdo;
+        this.derecho = derecho;
+        this.padre = null;
+        this.codigoIntermedio = "";
+        this.lugar = "";
+        this.valor = valor;
     }// Constructor
 
     public String getDato() {
@@ -84,6 +100,14 @@ public class Nodo {
 
     public void setLugar(String lugar) {
         this.lugar = lugar;
+    }
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
     }
     
     

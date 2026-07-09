@@ -91,10 +91,18 @@ public class ArbolAgenteIA {
         Nodo izquierdo = (Nodo) ArbolNodo.pop();
         
         String operador = caracter.pop();
+        int valorNodo=0;
         //Investigar qué hace peek
             /* Sirve para ver el elemento que se encuentra en la cima 
                de la pila sin extraerlo ni eliminarlo */
-        ArbolNodo.push(new Nodo(operador,izquierdo,derecho));
+            
+        switch (operador) {
+            case "+": valorNodo = izquierdo.getValor()+derecho.getValor(); break;
+            case "-": valorNodo = izquierdo.getValor()-derecho.getValor(); break;
+            case "/": valorNodo = izquierdo.getValor()/derecho.getValor(); break;
+            case "*": valorNodo = izquierdo.getValor()*derecho.getValor(); break;
+        }
+        ArbolNodo.push(new Nodo(operador,izquierdo,derecho,valorNodo));
         
         reglasEjecutadas.add("p"+paso+" E.nodo = new Nodo("+operador+",E1.nodo,T.nodo)");
 
@@ -102,7 +110,6 @@ public class ArbolAgenteIA {
     
     // Métodos del árbol
     public Nodo crear(String expresion){
-        int resp = showConfirmDialog(null, "¿Desea asignar valor a los tokes?", "Inserta Simbolos", YES_NO_OPTION);
         //1. Considerar la expresió como un conjunto de tokens
         StringTokenizer tokenizer;
         String token;
@@ -125,11 +132,27 @@ public class ArbolAgenteIA {
                 //System.out.println("Omitiendo espacios");//"Se trata de un identificador");
             if (!aritmeticos.contains(token)) { // No es un operador aritmético
                 //6. Extraer de la pila los términos que estaban
-                ArbolNodo.push(new Nodo(token));
+                
                 paso++;
                 reglasEjecutadas.add("p"+paso+" T.nodo = new Hoja(id<"+token+">,id.entrada_"+token+")");
                 
-                insertaSimbolos(token,resp);
+                    // Solicitar el valor del token
+                    // e insertar en tablaSimbolos
+                    // 01. Solicitar el valor para el token
+                    // 02. Insertar en Tabla símbolo
+                    // 03. Mostrar en consola al finalizar en getReglasEjecutadas
+                    if (!numeros.contains(token)) {
+                        String valor = "valor";
+                        try {
+                            while (!numeros.contains(valor)) valor = showInputDialog("¿Cuál es el valor de "+token+"?");
+                        } catch (Exception e) {
+                        }
+                        tablaSimbolos.put(token, valor);
+                        ArbolNodo.push(new Nodo(token,Integer.parseInt(valor)));
+                    }else {
+                        ArbolNodo.push(new Nodo(token,Integer.parseInt(token)));
+                        tablaSimbolos.put(token, token);
+                    }// if
                 
             }else if (token.equals("(")) caracter.push(token);
                 //7. Tratar tokens que no son paréntesis
@@ -169,17 +192,7 @@ public class ArbolAgenteIA {
     }// obtenerPrioridad
     
     public void insertaSimbolos(String token, int resp){
-        // Solicitar el valor del token
-        // e insertar en tablaSimbolos
-        // 01. Solicitar el valor para el token
-        // 02. Insertar en Tabla símbolo
-        // 03. Mostrar en consola al finalizar en getReglasEjecutadas
-        if (resp==0 && !numeros.contains(token)) {
-            String valor = showInputDialog("¿Cuál es el valor de "+token+"?");
-            tablaSimbolos.put(token, valor);
-        }else{
-            tablaSimbolos.put(token, token);
-        }
+        
         
     }// 
     
