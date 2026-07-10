@@ -34,7 +34,9 @@ public class ArbolAgenteIA {
     
     private Nodo raiz;
     //30 junio 2026
-    String [] temporales = {"T1","T2","T3","T4","T5"};
+    //String [] temporales = {"T1","T2","T3","T4","T5"};
+    ArrayList<String> temporales;
+    int temp;
     
     HashMap<String, String> tablaSimbolos;
     HashMap<String, String> erroresSemanticos;
@@ -52,12 +54,14 @@ public class ArbolAgenteIA {
         tablaSimbolos = new HashMap();
         erroresSemanticos = new HashMap();
         producciones = new HashMap();
+        temporales = new ArrayList<String>();
 
         ArbolNodo = new Stack<Nodo>();
         caracter = new Stack<String>();
         
         reglaSemantica = r = "";
         paso = 0;
+        temp = 0;
     } // Constructor
     
     //****** Reglas Ejecutadas ==== 1ro Julio
@@ -86,6 +90,7 @@ public class ArbolAgenteIA {
         if (ArbolNodo.size() < 2 || caracter.empty()) return;
         
         paso++;
+        temp++;
         r = "r" + paso;
         Nodo derecho = (Nodo) ArbolNodo.pop();
         Nodo izquierdo = (Nodo) ArbolNodo.pop();
@@ -102,10 +107,10 @@ public class ArbolAgenteIA {
             case "/": valorNodo = izquierdo.getValor()/derecho.getValor(); break;
             case "*": valorNodo = izquierdo.getValor()*derecho.getValor(); break;
         }
+        
         ArbolNodo.push(new Nodo(operador,izquierdo,derecho,valorNodo));
         
         reglasEjecutadas.add("p"+paso+" E.nodo = new Nodo("+operador+",E1.nodo,T.nodo)");
-
     }// guardar
     
     // Métodos del árbol
@@ -144,9 +149,8 @@ public class ArbolAgenteIA {
                     if (!numeros.contains(token)) {
                         String valor = "valor";
                         try {
-                            while (!numeros.contains(valor)) valor = showInputDialog("¿Cuál es el valor de "+token+"?");
-                        } catch (Exception e) {
-                        }
+                            while (!numeros.contains(valor)||valor==null) valor = showInputDialog("¿Cuál es el valor de "+token+"?");
+                        } catch (Exception e) {    }
                         tablaSimbolos.put(token, valor);
                         ArbolNodo.push(new Nodo(token,Integer.parseInt(valor)));
                     }else {
@@ -190,10 +194,5 @@ public class ArbolAgenteIA {
                 return -1; // para paréntesis u otros caracteres
         }// switch
     }// obtenerPrioridad
-    
-    public void insertaSimbolos(String token, int resp){
-        
-        
-    }// 
-    
+   
 }// Clase Arbol

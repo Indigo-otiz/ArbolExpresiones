@@ -4,7 +4,15 @@
  */
 package arbolE;
 
+import java.awt.Desktop;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Vector;
 import javax.swing.JFrame;
+import static javax.swing.JOptionPane.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,7 +21,11 @@ import javax.swing.JFrame;
 public class Frameinterfaz extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Frameinterfaz.class.getName());
+    private static final java.util.Set<String> OPERADORES = java.util.Set.of("+", "-", "*", "/");
     String nPolaca;
+    ArbolAgenteIA arbol;
+    int temp;
+    
     
     /**
      * Creates new form Frameinterfaz
@@ -21,11 +33,18 @@ public class Frameinterfaz extends javax.swing.JFrame {
     public Frameinterfaz() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        
+        temp = 0;
     }
     
     // Métodos inOrden, postOrden y preOrden 9-Julio
     public void inOrden(Nodo n){
-        
+        if (n!= null){
+            inOrden(n.getIzquierdo());
+            jTxtInOrden.append(n.getDato()+"\n");
+            inOrden(n.getDerecho());
+        }// if
     }// inOrden
     
     public void preOrden(Nodo n){
@@ -39,7 +58,11 @@ public class Frameinterfaz extends javax.swing.JFrame {
     }// preOrden
     
     public void postOrden(Nodo n){
-        
+        if (n!=null){
+            postOrden(n.getIzquierdo());
+            postOrden(n.getDerecho());
+            jTxtPostOrden.append(n.getDato()+"\n");
+        }// if
     }// postOrden
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,6 +73,11 @@ public class Frameinterfaz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Tabla_Simbolos = new javax.swing.JDialog();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblSimbolos = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         imagenRedondeada1 = new Componentes.ImagenRedondeada();
@@ -66,10 +94,11 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTxtInOrden = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
+        jTxtReglasEjecutadas = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea5 = new javax.swing.JTextArea();
+        jTxtCodigo3Direcciones = new javax.swing.JTextArea();
         BtnAgente = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -83,6 +112,69 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+
+        Tabla_Simbolos.setMinimumSize(new java.awt.Dimension(400, 400));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Tabla de Símbolos");
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton1.setText("Cerrar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        tblSimbolos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Token / id", "Valor"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblSimbolos.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        tblSimbolos.setMinimumSize(new java.awt.Dimension(30, 30));
+        tblSimbolos.setPreferredSize(new java.awt.Dimension(150, 100));
+        jScrollPane6.setViewportView(tblSimbolos);
+
+        javax.swing.GroupLayout Tabla_SimbolosLayout = new javax.swing.GroupLayout(Tabla_Simbolos.getContentPane());
+        Tabla_Simbolos.getContentPane().setLayout(Tabla_SimbolosLayout);
+        Tabla_SimbolosLayout.setHorizontalGroup(
+            Tabla_SimbolosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Tabla_SimbolosLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(Tabla_SimbolosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(Tabla_SimbolosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(0, 27, Short.MAX_VALUE))
+        );
+        Tabla_SimbolosLayout.setVerticalGroup(
+            Tabla_SimbolosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Tabla_SimbolosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Árbol de expresiones");
@@ -153,33 +245,40 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jTxtInOrden.setRows(5);
         jScrollPane3.setViewportView(jTxtInOrden);
 
-        jTextArea4.setColumns(20);
-        jTextArea4.setRows(5);
-        jScrollPane4.setViewportView(jTextArea4);
+        jTxtReglasEjecutadas.setColumns(20);
+        jTxtReglasEjecutadas.setRows(5);
+        jScrollPane4.setViewportView(jTxtReglasEjecutadas);
 
-        jTextArea5.setColumns(20);
-        jTextArea5.setRows(5);
-        jScrollPane5.setViewportView(jTextArea5);
+        jTxtCodigo3Direcciones.setColumns(20);
+        jTxtCodigo3Direcciones.setRows(5);
+        jScrollPane5.setViewportView(jTxtCodigo3Direcciones);
 
         BtnAgente.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         BtnAgente.setText("AgenteIA");
         BtnAgente.addActionListener(this::BtnAgenteActionPerformed);
+
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jButton3.setText("Optimiza Inter ...");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtnAgente, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BtnAgente, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addGap(92, 92, 92))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -189,19 +288,19 @@ public class Frameinterfaz extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
                     .addComponent(BtnAgente)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
@@ -227,9 +326,11 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton4.setText("Código de 3 direcciones");
         jButton4.setActionCommand("Codigo de 3 direcciones");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton5.setText("Tabla de símbolos");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -237,7 +338,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jNotacionPolaca, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -298,7 +399,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(33, 33, 33))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,8 +443,10 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1049, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -369,7 +472,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
         datos = jTextField1.getText();
         
         Nodo arbolExpresion = a.crear(datos); // Enviar los datos
-        jTextArea4.append(a.getReglasEjecutadas());
+        jTxtReglasEjecutadas.append(a.getReglasEjecutadas());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jNotacionPolacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNotacionPolacaActionPerformed
@@ -377,18 +480,26 @@ public class Frameinterfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jNotacionPolacaActionPerformed
 
     private void BtnAgenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgenteActionPerformed
-        jTextArea4.setText("");
+        jTxtReglasEjecutadas.setText(""); jTxtCodigo3Direcciones.setText("");
+        jTxtInOrden.setText(""); jTxtPreOrden.setText(""); jTxtPostOrden.setText("");
+        temp=0;
         
         String datos="";
-        ArbolAgenteIA arbol = new ArbolAgenteIA();
+        arbol = new ArbolAgenteIA();
         datos = jTextField1.getText();
         Nodo arbolExpresion = arbol.crear(datos); //Enviar los datos al árbol = expresión
-        jTextArea4.append(arbol.getReglasEjecutadas());
+        jTxtReglasEjecutadas.append(arbol.getReglasEjecutadas());
+        archivoReglasEjecutadas(arbol.getReglasEjecutadas());
         
         preOrden(arbolExpresion);
+        inOrden(arbolExpresion);
+        postOrden(arbolExpresion);
+        //intermedio(arbolExpresion);
+        intermedioOptimizado(arbolExpresion);
         
         PersonalizarPanelArbol p = new PersonalizarPanelArbol();
         p.setModal(true);
+        p.setLocationRelativeTo(null);
         p.setVisible(true);
         
         JFrame ventana = new JFrame("Visualizador de Árboles - LyA2");
@@ -399,13 +510,138 @@ public class Frameinterfaz extends javax.swing.JFrame {
         ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
+        
+        jTxtCodigo3Direcciones.append(arbolExpresion.getCodigoIntermedio());
     }//GEN-LAST:event_BtnAgenteActionPerformed
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
         // TODO add your handling code here:
-        jTextArea4.setText(""); 
+        jTxtReglasEjecutadas.setText(""); 
     }//GEN-LAST:event_btnCleanActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        jTxtCodigo3Direcciones.setText("");
+        //jTxtCodigo3Direcciones.append(codigoI);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        try {
+            DefaultTableModel m = (DefaultTableModel) tblSimbolos.getModel();
+            m.setRowCount(0);
+            System.out.println("tabla");
+            arbol.tablaSimbolos.forEach((clave,valor)->{
+                Vector simbolo = new Vector();
+                simbolo.add(clave); simbolo.add(valor);
+                m.addRow(simbolo);
+                System.out.println(simbolo.toString());
+            });
+
+            Tabla_Simbolos.setModal(true);
+            Tabla_Simbolos.setLocationRelativeTo(null);
+            Tabla_Simbolos.setVisible(true);
+        } catch (Exception e) {
+            showMessageDialog(null, "Compila una expresión primero");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Tabla_Simbolos.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        File archivoMP4 = new File("Optimizacion.mp4");
+
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().open(archivoMP4);
+            } catch (IOException e) {
+                System.out.println("No se pudo abrir el archivo: " + e.getMessage());
+            }
+        }
+        
+        showMessageDialog(null,"Optimización implemetada correctamente");
+    }//GEN-LAST:event_jButton3ActionPerformed
+    
+    public void archivoReglasEjecutadas (String reglasEjecutadas){
+        String rutaArchivo = "reglasSemanticas.txt";
+
+        // Uso de try-with-resources para cerrar automáticamente el archivo
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {
+            bw.write(reglasEjecutadas);
+            System.out.println("Archivo creado y guardado exitosamente.");
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al guardar el archivo:");
+            e.printStackTrace();
+        }
+    }
+    
+    public void intermedio(Nodo n){
+        if (n!=null){
+            intermedio(n.getIzquierdo());
+            intermedio(n.getDerecho());
+            if(n.getIzquierdo()==null && n.getDerecho()==null){
+                n.setLugar(n.getDato()+" ");
+                n.setCodigoIntermedio("");
+            }else{
+                if(n.getDato().equals("+")||n.getDato().equals("*")||n.getDato().equals("/")||n.getDato().equals("-")){
+                    temp++;
+                    n.setLugar("T"+temp);
+                    Nodo izquierdo = n.getIzquierdo();
+                    Nodo derecho = n.getDerecho();
+                    String codigoI = "";
+                    codigoI = izquierdo.getCodigoIntermedio()+" "+derecho.getCodigoIntermedio()+" "+n.getLugar()+" = "+izquierdo.getLugar()
+                            +" "+n.getDato()+" "+derecho.getLugar();
+                    n.setCodigoIntermedio(codigoI+"\n");
+                    
+                }else{
+                    if (n.getDato().equals("=")){
+                        String codigoI = "";
+                        Nodo izquierdo = n.getIzquierdo();
+                        Nodo derecho = n.getDerecho();
+                        codigoI = derecho.getDato()+" "+izquierdo.getLugar()+" = T"+temp+"\n";
+                        n.setCodigoIntermedio(codigoI);
+                    }//equals =
+                } // equals +-/*
+            }// getDerecho getIzquierdo
+        }// n!=null
+    }//intermedio
+    
+    public void intermedioOptimizado(Nodo n) {
+        if (n == null) return;
+
+        Nodo izquierdo = n.getIzquierdo();
+        Nodo derecho = n.getDerecho();
+
+        intermedio(izquierdo);
+        intermedio(derecho);
+
+        if (izquierdo == null && derecho == null) {
+            n.setLugar(n.getDato() + " ");
+            n.setCodigoIntermedio("");
+            return;
+        }
+
+        if (OPERADORES.contains(n.getDato())) {
+            temp++;
+            n.setLugar("T" + temp);
+            String codigoI = izquierdo.getCodigoIntermedio() + " " + derecho.getCodigoIntermedio()
+                    + " " + n.getLugar() + " = " + izquierdo.getLugar() + " " + n.getDato() + " " + derecho.getLugar();
+            n.setCodigoIntermedio(codigoI + "\n");
+            return;
+        }
+
+        if (n.getDato().equals("=")) {
+            // Arrastro el código del hijo derecho, si no, se pierde la subexpresión
+            String codigoI = derecho.getCodigoIntermedio()
+                    + izquierdo.getLugar() + " = T" + temp + "\n";
+            n.setCodigoIntermedio(codigoI);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -433,15 +669,19 @@ public class Frameinterfaz extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAgente;
+    private javax.swing.JDialog Tabla_Simbolos;
     private javax.swing.JButton btnClean;
     private Componentes.ImagenRedondeada imagenRedondeada1;
     private Componentes.ImagenRedondeada imagenRedondeada2;
     private Componentes.ImagenRedondeada imagenRedondeada3;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -459,11 +699,13 @@ public class Frameinterfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextArea jTextArea5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea jTxtCodigo3Direcciones;
     private javax.swing.JTextArea jTxtInOrden;
     private javax.swing.JTextArea jTxtPostOrden;
     private javax.swing.JTextArea jTxtPreOrden;
+    private javax.swing.JTextArea jTxtReglasEjecutadas;
+    private javax.swing.JTable tblSimbolos;
     // End of variables declaration//GEN-END:variables
 }
