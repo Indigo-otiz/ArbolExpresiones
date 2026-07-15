@@ -50,8 +50,14 @@ public class ArbolAgenteIA {
     String r;
     String reglaSemantica;
     
+    public String emu86; //== 15 julio
+    
     // Constrcutor
     public ArbolAgenteIA(){
+        emu86 = "; Ortiz Vega Índigo Andre \n"+
+                ".model small \n"+
+                ".stack \n"+
+                ".data \n";
         reglasEjecutadas = new ArrayList<String>(); //1ro Julio
         tablaSimbolos = new HashMap();
         erroresSemanticos = new HashMap();
@@ -158,6 +164,7 @@ public class ArbolAgenteIA {
                         } catch (Exception e) {    }
                         tablaSimbolos.put(token, valor);
                         ArbolNodo.push(new Nodo(token,Integer.parseInt(valor)));
+                        emu86 += token+" dw "+valor+"\n";
                     }else {
                         ArbolNodo.push(new Nodo(token,Integer.parseInt(token)));
                         tablaSimbolos.put(token, token);

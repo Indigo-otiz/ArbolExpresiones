@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import static javax.swing.JOptionPane.*;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +33,10 @@ public class Frameinterfaz extends javax.swing.JFrame {
     FrameCuadruplos Cuadruplas;
     FrameTripletas frameTripletas;
     
+    String izq, der;
+    String emuLocal;
+    int Contador;
+    
     /**
      * Creates new form Frameinterfaz
      */
@@ -37,8 +44,9 @@ public class Frameinterfaz extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
-        
-        temp = 0;
+        emuLocal = "";
+        izq = der = "";
+        temp = Contador = 0;
     }
     
     // Métodos inOrden, postOrden y preOrden 9-Julio
@@ -47,6 +55,30 @@ public class Frameinterfaz extends javax.swing.JFrame {
             inOrden(n.getIzquierdo());
             jTxtInOrden.append(n.getDato()+"\n");
             inOrden(n.getDerecho());
+            //15 julio
+            
+            
+            switch (n.getDato()) {
+                case "+": System.out.println("add"); 
+                            izq = n.getIzquierdo().getDato();
+                            der = n.getDerecho().getDato(); 
+                            
+                            System.out.println("izq: "+izq);
+                            System.out.println("der: "+der);
+                            emuLocal += "mov ax, "+n.getIzquierdo().getDato()+"\n";
+                            emuLocal += "mov bx, "+n.getDerecho().getDato()+"\n";
+                            emuLocal += "add ax,bx\n\n";
+                            break;
+                case "-": System.out.println("sub"); 
+                            izq = n.getIzquierdo().getDato();
+                            der = n.getDerecho().getDato(); break;
+                case "/": System.out.println("div"); 
+                            izq = n.getIzquierdo().getDato();
+                            der = n.getDerecho().getDato(); break;
+                case "*": System.out.println("mul"); 
+                            izq = n.getIzquierdo().getDato();
+                            der = n.getDerecho().getDato(); break;
+            }// fin switch
         }// if
     }// inOrden
     
@@ -87,7 +119,6 @@ public class Frameinterfaz extends javax.swing.JFrame {
         imagenRedondeada2 = new Componentes.ImagenRedondeada();
         imagenRedondeada3 = new Componentes.ImagenRedondeada();
         jPanel2 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -102,6 +133,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jTxtCodigo3Direcciones = new javax.swing.JTextArea();
         BtnAgente = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -116,7 +148,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         Tabla_Simbolos.setMinimumSize(new java.awt.Dimension(400, 400));
 
@@ -229,10 +261,6 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jButton2.setText("Cuadruplos");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-
         jTextField1.setBackground(new java.awt.Color(204, 255, 153));
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
 
@@ -267,6 +295,10 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jButton3.setText("Optimiza Inter ...");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
+        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jButton7.setText("PanelGrafo");
+        jButton7.addActionListener(this::jButton7ActionPerformed);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -279,8 +311,8 @@ public class Frameinterfaz extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BtnAgente, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
@@ -303,9 +335,9 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
                     .addComponent(BtnAgente)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
@@ -343,7 +375,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jNotacionPolaca, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -402,7 +434,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
@@ -423,9 +455,9 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jButton6.setText("Direcciones");
         jButton6.addActionListener(this::jButton6ActionPerformed);
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jButton7.setText("PanelGrafo");
-        jButton7.addActionListener(this::jButton7ActionPerformed);
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jButton2.setText("Cuadruplos");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -437,9 +469,9 @@ public class Frameinterfaz extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
+                        .addGap(716, 716, 716)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -453,8 +485,8 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
-                    .addComponent(jButton7))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(jButton2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -474,7 +506,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -511,6 +543,17 @@ public class Frameinterfaz extends javax.swing.JFrame {
         postOrden(arbolExpresion);
         //intermedio(arbolExpresion);
         intermedioOptimizado(arbolExpresion);
+        
+        arbol.emu86 += ".code \n"+
+                        "mov ax,@data \n"+
+                        "mov ds,ax \n";
+        String finalEmu = arbol.emu86+this.emuLocal;
+        finalEmu += "\n mov ax,4c00h \n"+
+                "int 21h \n end";
+        showMessageDialog(null,finalEmu); // 15 julio   
+        Contador++;
+        generaEmutasm(finalEmu, Contador);
+        sonido();
         
         PersonalizarPanelArbol p = new PersonalizarPanelArbol();
         p.setModal(true);
@@ -678,7 +721,38 @@ public class Frameinterfaz extends javax.swing.JFrame {
             n.setCodigoIntermedio(codigoI);
         }
     }
-
+    
+    public void generaEmutasm(String emu, int i){
+        try{
+            FileWriter escritor = new FileWriter("e"+i+".asm");
+            escritor.write(emu);
+            escritor.close();
+            System.out.println("Archivo creado exitosamente");
+        }
+        catch(Exception e){
+            System.out.println("Ha ocurrido un error al crear el archivo");
+        }
+    }// generaEmutasm
+    
+    public void sonido(){
+        //sonido
+        try {
+            File sonido = new File("src/arbolE/sonido.wav");
+            if (sonido.exists()) {
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(sonido);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioStream);
+                clip.start(); 
+            } else {
+                showMessageDialog(null, "No se encontró el archivo de sonido.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showMessageDialog(null, "Error al reproducir el sonido.");
+        }
+    }
+    
+    
     public Nodo getArbolExpresion() {
         return arbolExpresion;
     }
