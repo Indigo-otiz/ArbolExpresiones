@@ -45,6 +45,8 @@ public class ArbolAgenteIA {
     // 1ero de Julio
     ArrayList<String> reglasEjecutadas;
     
+    ArrayList<String[]> tripletas;
+    
     String r;
     String reglaSemantica;
     
@@ -58,6 +60,8 @@ public class ArbolAgenteIA {
 
         ArbolNodo = new Stack<Nodo>();
         caracter = new Stack<String>();
+        
+        tripletas = new ArrayList<>();
         
         reglaSemantica = r = "";
         paso = 0;
@@ -109,6 +113,7 @@ public class ArbolAgenteIA {
         }
         
         ArbolNodo.push(new Nodo(operador,izquierdo,derecho,valorNodo));
+        tripletas.add(new String[]{operador,izquierdo.getValor()+"",derecho.getValor()+""});
         
         reglasEjecutadas.add("p"+paso+" E.nodo = new Nodo("+operador+",E1.nodo,T.nodo)");
     }// guardar
@@ -194,5 +199,51 @@ public class ArbolAgenteIA {
                 return -1; // para paréntesis u otros caracteres
         }// switch
     }// obtenerPrioridad
-   
+    
+    public Nodo convertirAGAD(Nodo raizAST) {
+        HashMap<String, Nodo> tabla = new HashMap<>();
+        return convertir(raizAST, tabla);
+    }
+
+    private Nodo convertir(Nodo n, HashMap<String, Nodo> tabla) {
+        if (n == null) return null;
+
+        if (n.getIzquierdo() == null && n.getDerecho() == null) {
+            String clave = "HOJA#" + n.getDato();
+            Nodo existente = tabla.get(clave);
+            if (existente != null) return existente; // reutiliza
+            tabla.put(clave, n);
+            return n;
+        }
+
+        // Procesar hijos primero (post-orden): así al llegar al padre
+        // ya sabemos si los hijos son nodos compartidos o no.
+        Nodo izqNuevo = convertir(n.getIzquierdo(), tabla);
+        Nodo derNuevo = convertir(n.getDerecho(), tabla);
+
+        // Reasignar hijos (puede que ahora apunten a nodos ya existentes)
+        n.setIzquierdo(izqNuevo);
+        n.setDerecho(derNuevo);
+
+        String clave = n.getDato() + "#" 
+                     + System.identityHashCode(izqNuevo) + "#" 
+                     + System.identityHashCode(derNuevo);
+
+        Nodo existente = tabla.get(clave);
+        if (existente != null) return existente; 
+
+        tabla.put(clave, n);
+        return n;
+    }
+
+    public ArrayList<String[]> getTripletas() {
+        return tripletas;
+    }
+
+    public void setTripletas(ArrayList<String[]> tripletas) {
+        this.tripletas = tripletas;
+    }
+    
+    
+    
 }// Clase Arbol

@@ -4,6 +4,7 @@
  */
 package arbolE;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -25,7 +26,9 @@ public class Frameinterfaz extends javax.swing.JFrame {
     String nPolaca;
     ArbolAgenteIA arbol;
     int temp;
-    
+    Nodo arbolExpresion;
+    FrameCuadruplos Cuadruplas;
+    FrameTripletas frameTripletas;
     
     /**
      * Creates new form Frameinterfaz
@@ -112,6 +115,8 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         Tabla_Simbolos.setMinimumSize(new java.awt.Dimension(400, 400));
 
@@ -123,6 +128,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
         jButton1.setText("Cerrar");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
+        tblSimbolos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         tblSimbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -224,7 +230,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
         );
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jButton2.setText("Compila");
+        jButton2.setText("Cuadruplos");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jTextField1.setBackground(new java.awt.Color(204, 255, 153));
@@ -277,19 +283,18 @@ public class Frameinterfaz extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnAgente, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addGap(92, 92, 92))
+                        .addComponent(jButton3))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(92, 92, 92))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,7 +343,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jNotacionPolaca, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -397,7 +402,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
@@ -414,6 +419,14 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
+        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jButton6.setText("Direcciones");
+        jButton6.addActionListener(this::jButton6ActionPerformed);
+
+        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jButton7.setText("PanelGrafo");
+        jButton7.addActionListener(this::jButton7ActionPerformed);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -421,8 +434,13 @@ public class Frameinterfaz extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -430,9 +448,13 @@ public class Frameinterfaz extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6)
+                    .addComponent(jButton7))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -444,9 +466,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1049, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -466,13 +486,8 @@ public class Frameinterfaz extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String datos = "";
-        //Arbol a = new Arbol();
-        ArbolIndigo a = new ArbolIndigo();
-        datos = jTextField1.getText();
-        
-        Nodo arbolExpresion = a.crear(datos); // Enviar los datos
-        jTxtReglasEjecutadas.append(a.getReglasEjecutadas());
+        Cuadruplas = new FrameCuadruplos(arbolExpresion);
+        Cuadruplas.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jNotacionPolacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNotacionPolacaActionPerformed
@@ -487,7 +502,7 @@ public class Frameinterfaz extends javax.swing.JFrame {
         String datos="";
         arbol = new ArbolAgenteIA();
         datos = jTextField1.getText();
-        Nodo arbolExpresion = arbol.crear(datos); //Enviar los datos al árbol = expresión
+        arbolExpresion = arbol.crear(datos); //Enviar los datos al árbol = expresión
         jTxtReglasEjecutadas.append(arbol.getReglasEjecutadas());
         archivoReglasEjecutadas(arbol.getReglasEjecutadas());
         
@@ -511,7 +526,19 @@ public class Frameinterfaz extends javax.swing.JFrame {
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
         
+        JFrame ventana2 = new JFrame("Visualizador de GDA - LyA2");
+        PanelGrafo panel2 = new PanelGrafo(arbol.convertirAGAD(arbolExpresion), panel.getColorNodo(), panel.getAnchoNodo()/2, panel.getColorLinea(), panel.getAnchoLinea());
+              
+        ventana2.add(panel2);
+        ventana2.setSize(600,400);
+        ventana2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ventana2.setLocationRelativeTo(null);
+        ventana2.setVisible(true);
+        
         jTxtCodigo3Direcciones.append(arbolExpresion.getCodigoIntermedio());
+        
+        frameTripletas = new FrameTripletas(arbol.getTripletas());
+        frameTripletas.setVisible(true);
     }//GEN-LAST:event_BtnAgenteActionPerformed
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
@@ -565,6 +592,16 @@ public class Frameinterfaz extends javax.swing.JFrame {
         
         showMessageDialog(null,"Optimización implemetada correctamente");
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        FrameDescripcion ventanaIntermedio = new FrameDescripcion();
+        ventanaIntermedio.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
     
     public void archivoReglasEjecutadas (String reglasEjecutadas){
         String rutaArchivo = "reglasSemanticas.txt";
@@ -641,6 +678,14 @@ public class Frameinterfaz extends javax.swing.JFrame {
             n.setCodigoIntermedio(codigoI);
         }
     }
+
+    public Nodo getArbolExpresion() {
+        return arbolExpresion;
+    }
+
+    public void setArbolExpresion(Nodo arbolExpresion) {
+        this.arbolExpresion = arbolExpresion;
+    }
     
     /**
      * @param args the command line arguments
@@ -679,6 +724,8 @@ public class Frameinterfaz extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

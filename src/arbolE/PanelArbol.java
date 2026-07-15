@@ -112,5 +112,38 @@ public class PanelArbol extends JPanel {
         int altoTexto = fm.getAscent();
         g.drawString(nodo.getDato(), x - (anchoTexto / 2), y + (altoTexto / 4));
     }//dibujarNodo
+
+    public int getAnchoNodo() {
+        return anchoNodo;
+    }
+
+    public void setAnchoNodo(int anchoNodo) {
+        this.anchoNodo = anchoNodo;
+    }
+
+    public int getAnchoLinea() {
+        return anchoLinea;
+    }
+
+    public void setAnchoLinea(int anchoLinea) {
+        this.anchoLinea = anchoLinea;
+    }
+
+    public Color getColorNodo() {
+        return colorNodo;
+    }
+
+    public void setColorNodo(Color colorNodo) {
+        this.colorNodo = colorNodo;
+    }
+
+    public Color getColorLinea() {
+        return colorLinea;
+    }
+
+    public void setColorLinea(Color colorLinea) {
+        this.colorLinea = colorLinea;
+    }
+    
     
 }//FIN CLASE

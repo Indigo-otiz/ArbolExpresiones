@@ -4,6 +4,8 @@
  */
 package arbolE;
 
+import static javax.swing.JOptionPane.*;
+
 /**
  *
  * @author aneao
@@ -16,6 +18,9 @@ public class FramePrincipal extends javax.swing.JFrame {
      * Creates new form FramePrincipal
      */
     Frameinterfaz Interfaz;
+    FrameTripletas Tripletas;
+    FrameCuadruplos Cuadruplas;
+    
     
     public FramePrincipal() {
         initComponents();
@@ -49,6 +54,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jButton11 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LyA2 - MicroCompilador");
@@ -78,7 +84,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addComponent(imagenRedondeada2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(158, 158, 158)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addComponent(imagenRedondeada3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -107,9 +113,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton5.setText("Tripletas");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton6.setText("Cuádruplos");
+        jButton6.addActionListener(this::jButton6ActionPerformed);
 
         jButton7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton7.setText("N Polaca");
@@ -176,12 +184,18 @@ public class FramePrincipal extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton2.setText("Salir");
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jButton1.setText("Asignación Individual");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(716, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(55, 55, 55))
         );
@@ -189,7 +203,9 @@ public class FramePrincipal extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -225,6 +241,26 @@ public class FramePrincipal extends javax.swing.JFrame {
         Interfaz.setVisible(true);
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        Tripletas.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        if (Interfaz.getArbolExpresion()!=null){
+            Cuadruplas = new FrameCuadruplos(Interfaz.getArbolExpresion());
+            Cuadruplas.setVisible(true);
+        }else
+            showMessageDialog(null,"Compila una expresión primero");
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        SSADiagrama ventana = new SSADiagrama();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -254,6 +290,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private Componentes.ImagenRedondeada imagenRedondeada1;
     private Componentes.ImagenRedondeada imagenRedondeada2;
     private Componentes.ImagenRedondeada imagenRedondeada3;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
