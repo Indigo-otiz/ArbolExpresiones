@@ -243,11 +243,11 @@ public class FrameLCD extends javax.swing.JFrame {
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
         // TODO add your handling code here:
-        btnLimpiar.doClick();
-        
         String mensaje = jTxtEnvio.getText();
         int contador = jTxtEnvio.getText().trim().length();
         String nombreArchivo = jTxtArchivo.getText();
+        
+        btnLimpiar.doClick();
         
         String emu =    "; ORTIZ VEGA ÍNDIGO ANDRE - PRUEBA LCD - Guardar como "+nombreArchivo+".asm\n" +
                         ".model small\n" +
@@ -259,7 +259,7 @@ public class FrameLCD extends javax.swing.JFrame {
                         "    mov ds,ax  \n\n" +
                         "    mov si,0 \n" +
                         "    mov cx,"+contador+"\n"+
-                        "    mov dx,2040h ; número de puerto inicial de LCD\n\n" +
+                        "    mov dx,2040h \n\n" +
                         "label01:    \n" +
                         "    mov al, mensaje[si]\n" +
                         "    out dx,al \n" +
